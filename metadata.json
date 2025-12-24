@@ -1,0 +1,8 @@
+
+{
+  "name": "喵喵大王圣诞之约",
+  "description": "一个结合了 Three.js 粒子特效、GLSL 着色器与 MediaPipe 手势识别的圣诞树交互应用。支持爱心模式、相册墙、手势控制与实时后期处理。",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

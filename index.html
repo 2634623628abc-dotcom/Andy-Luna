@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>喵喵大王圣诞快乐</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37; --rose: #ff3366; --obsidian: #050505;
+        }
+        body {
+            margin: 0; overflow: hidden; background-color: var(--obsidian);
+            font-family: 'Cinzel', serif; color: var(--gold);
+            user-select: none;
+        }
+        #loader {
+            position: fixed; inset: 0; background: #000; z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1s ease;
+        }
+        #loader.fade-out { opacity: 0; pointer-events: none; }
+        .spinner {
+            width: 50px; height: 50px; border: 2px solid rgba(212,175,55,0.1);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #ui-layer {
+            position: fixed; inset: 0; pointer-events: none; z-index: 100;
+        }
+        .title-container {
+            position: absolute; top: 40px; left: 40px;
+        }
+        h1 {
+            margin: 0; font-family: 'Noto Serif SC', serif; font-size: 42px;
+            background: linear-gradient(135deg, #fff, var(--gold));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(212,175,55,0.3));
+        }
+        #hud-layer {
+            position: absolute; bottom: 40px; width: 100%; display: flex; justify-content: center;
+            transition: all 0.5s ease;
+        }
+        .hud-hidden { transform: translateY(150px); opacity: 0; }
+        .panel {
+            pointer-events: auto; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(25px);
+            padding: 15px 40px; border-radius: 50px; border: 1px solid rgba(212,175,55,0.15);
+            display: flex; align-items: center; gap: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        .btn {
+            background: transparent; border: 1px solid var(--gold); color: var(--gold);
+            padding: 10px 25px; border-radius: 25px; cursor: pointer; font-weight: bold;
+            font-family: 'Cinzel'; transition: 0.3s;
+        }
+        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+        
+        #smart-cursor {
+            position: fixed; width: 40px; height: 40px; border: 1.5px solid var(--gold);
+            border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none;
+            z-index: 2000; display: none; transition: width 0.2s, height 0.2s, background 0.2s;
+            box-shadow: 0 0 15px rgba(212,175,55,0.3);
+        }
+        #smart-cursor.locked {
+            width: 15px; height: 15px; background: var(--rose); border-color: var(--rose);
+            box-shadow: 0 0 25px var(--rose);
+        }
+        #vision-feed { display: none; }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+    "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/+esm",
+    "three/": "https://esm.sh/three@^0.182.0/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="margin-top:20px; letter-spacing: 4px; font-size: 12px;">INITIALIZING HOLIDAY MAGIC</p>
+    </div>
+
+    <div id="smart-cursor"></div>
+
+    <div id="ui-layer">
+        <div class="title-container">
+            <h1>喵喵大王圣诞快乐</h1>
+            <p style="font-size: 10px; letter-spacing: 5px; opacity: 0.5; margin: 5px 0 0 2px;">INTERACTIVE MEMORY ARCHIVE</p>
+        </div>
+
+        <div id="hud-layer">
+            <div class="panel">
+                <button class="btn" onclick="document.getElementById('upload').click()">ADD MEMORIES</button>
+                <div style="font-size: 10px; opacity: 0.5;">[H] HIDE UI | [L] LOVE MODE | PINCH TO FOCUS</div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="upload" accept="image/*" multiple style="display:none">
+    <video id="vision-feed" autoplay playsinline></video>
+
+    <script type="module" src="index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
